@@ -1,0 +1,9 @@
+/*
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: cross-origin
+
+# Cache WASM files aggressively to improve load speeds
+/*.wasm
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: application/wasm
