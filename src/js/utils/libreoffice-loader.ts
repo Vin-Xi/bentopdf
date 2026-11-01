@@ -11,6 +11,10 @@ import type { InputFormat } from '@matbee/libreoffice-converter/browser';
 import { trText } from '../i18n/i18n.js';
 
 const LIBREOFFICE_LOCAL_PATH = import.meta.env.BASE_URL + 'libreoffice-wasm/';
+// soffice.wasm and soffice.data exceed Cloudflare Pages' 25 MB file limit.
+// The version must match the soffice.js and workers in public/libreoffice-wasm.
+const LIBREOFFICE_CDN_PATH =
+  'https://unpkg.com/@matbee/libreoffice-converter@2.4.0/wasm/';
 
 export interface LoadProgress {
   phase: 'loading' | 'initializing' | 'converting' | 'complete' | 'ready';
@@ -84,11 +88,11 @@ export class LibreOfficeConverter {
 
       const [sofficeWasmUrl, sofficeDataUrl] = await Promise.all([
         fetchAsDecompressedUrl(
-          `${this.basePath}soffice.wasm.gz`,
+          `${LIBREOFFICE_CDN_PATH}soffice.wasm`,
           'application/wasm'
         ),
         fetchAsDecompressedUrl(
-          `${this.basePath}soffice.data.gz`,
+          `${LIBREOFFICE_CDN_PATH}soffice.data`,
           'application/octet-stream'
         ),
       ]);
